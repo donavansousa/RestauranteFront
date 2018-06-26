@@ -1,0 +1,84 @@
+<style>
+    fieldset.scheduler-border {
+      border: 1px groove #ddd !important;
+      padding: 0 1.4em 1.4em 1.4em !important;
+      margin: 0 0 1.5em 0 !important;
+      -webkit-box-shadow:  0px 0px 0px 0px #000;
+              box-shadow:  0px 0px 0px 0px #000;
+  }
+  
+      legend.scheduler-border {
+          font-size: 1.2em !important;
+          font-weight: bold !important;
+          text-align: left !important;
+          width:auto;
+          padding:0 10px;
+          border-bottom:none;
+      }
+  
+  </style>
+  
+<div class="container">
+    <div *ngIf="!AdicionarOuEditar">
+<div align="left">
+  <h2>Restaurantes</h2>
+</div>
+<div  class="container">
+<fieldset  class="scheduler-border">
+  <legend  class="scheduler-border"> Filtros</legend><br>
+  <label for="Nome">Nome</label>
+  <input type="text" name="filtro" [(ngModel)]="filtro" class="form-control"/><br/> 
+  <input type="submit" (click)="filter()" class="btn btn-info" value="Pesquisar"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-success" (click)="add()" value="Cadastrar novo Restaurante"/> 
+</fieldset>
+</div>
+
+<table class="table table-striped">
+  <thead> 
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let res of restaurantes">
+      <td>{{res.Descricao}}</td>
+      <td>
+        <button (click)="edit(res)" class="btn btn-primary">Editar</button>&nbsp;&nbsp;
+        <button (click)="delete(res)" class="btn btn-danger">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="AdicionarOuEditar">
+<section>
+  <div class="row">
+    <h2>{{formLabel}}</h2>
+    <div  class="container">
+        <fieldset  class="scheduler-border">
+          <legend  class="scheduler-border">Dados</legend><br>
+ 
+       
+    <form #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <input type="hidden" [(ngModel)]="restaurante.IdRestaurante" name="IdRestaurante" />
+            <label class="control-label col-xs-12 col-sm-1">Nome:</label>
+            <div class="col-xs-12 col-sm-6">
+              <input type="text" required class="form-control" minlength="3" [(ngModel)]="restaurante.Descricao" name="Descricao"/>
+            </div>
+          </div>
+          <div class="form-footer col-xs-12 col-sm-3">
+            <button type="button" (click)="cancel()" class="btn btn-danger">Cancelar</button>&nbsp;&nbsp;
+            <button type="submit" class="btn btn-success"  [disabled]="!f.valid">Salvar</button>
+            
+          </div>
+        </div>
+    </form>
+  </fieldset>
+</div>
+  </div>
+</section>
+</div>
+</div>
+
